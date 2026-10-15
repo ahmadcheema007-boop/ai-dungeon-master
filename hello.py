@@ -20,9 +20,7 @@ load_dotenv()
 client = genai.Client()
 
 
-# Ask Google which models this key can use, and print each name. 
-for model in client.models.list():
-    print(model.name)
+
 
 
 # THE REQUEST: send one message and store the reply ---
@@ -36,7 +34,16 @@ response = client.models.generate_content(
 
     # What you are saying to the model. A plain string works for one message. 
     # Later, for history, this becomes a list of past messages. 
-    contents ="My name is Ahmad and I am a wizard.", 
+    contents = [
+
+        {"role": "user", "parts": [{"text": "My name is Ahmad and I'm a wizard."}]},
+        {"role": "model", "parts": [{"text": "Well met, Ahmad! What is your speciality?"}]},
+        {"role": "user", "parts": [{"text": "What's my name and what an I?"}]},
+    ],
+
+    # role says who spoke> Gemini uses "user" for you and "model" for the AI. 
+    # parts is a list because a message can contain several pieces
+    # List order matters. It is a conversation in sequence, ending with the newest question.
 
 )
 
