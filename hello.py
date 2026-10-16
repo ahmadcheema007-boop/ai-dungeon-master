@@ -1,3 +1,39 @@
+'''
+hello.py 
+
+What the file does:
+This script sends a short conversation to an AI model
+(Google's Gemini) and prints the answer it gets back. 
+
+The key idea it demonstrates: 
+AI models do not remember anything between requests. 
+Each time a program asks the model something, the model 
+starts completely fresh. It has no idea what was said a moment ago. 
+
+What I tested:
+1. I asked "What's my name and what am I?" by itself. The model couldn't
+   answer, because it had never been told.
+2. I asked the same question again, but this time I included the earlier
+   messages (where I introduced myself as Ahmad, a wizard). Now the model
+   answered correctly.
+
+Why that matters:
+When a chatbot seems to remember a conversation, it's because the app
+quietly sends the whole conversation history along with every new message.
+The "memory" lives in the app, not in the model.
+
+How the file works, step by step:
+- It loads a secret API key from a .env file. An API key is like a
+  password that lets my program use Gemini. Keeping it in .env means it
+  never gets uploaded to GitHub.
+- It creates a "client", which is the connection to Gemini.
+- It sends the conversation as a list of messages, each labeled as coming
+  from the "user" (me) or the "model" (the AI).
+- It prints the model's reply.
+
+'''
+
+
 # --- IMPORTS: tell Python which tools this file needs. 
 
 # "genai" is Google's library for talking to Gemini.
@@ -41,7 +77,7 @@ response = client.models.generate_content(
         {"role": "user", "parts": [{"text": "What's my name and what an I?"}]},
     ],
 
-    # role says who spoke> Gemini uses "user" for you and "model" for the AI. 
+    # role says who spoke Gemini uses "user" for you and "model" for the AI. 
     # parts is a list because a message can contain several pieces
     # List order matters. It is a conversation in sequence, ending with the newest question.
 
